@@ -9,6 +9,7 @@ local Camera = workspace.CurrentCamera
 local Mouse = LocalPlayer:GetMouse()
 
 local Settings = {
+    Enbaled = true
     FovColor = value
 }
 
