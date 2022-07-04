@@ -8,8 +8,13 @@ local Character = LocalPlayer.Character
 local Camera = workspace.CurrentCamera
 local Mouse = LocalPlayer:GetMouse()
 
+local Settings = {
+    FovColor = value
+}
+
 local function GetClosest(Fov)
-    local Target, Closest = nil, math.huge
+    local Target = nil
+    local Closest = math.huge
     
     for i,v in pairs(Players:GetPlayers()) do
         if (v.Name ~= LocalPlayer.Name and v.Character and v.Character.HumanoidRootPart) then
@@ -34,7 +39,7 @@ RunService.Stepped:Connect(function()
     CircleInline.Thickness = 2
     CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
     CircleInline.Transparency = 1
-    CircleInline.Color = Color3.fromRGB(255, 255, 255)
+    CircleInline.Color = Settings.FovColor
     CircleInline.Visible = true
     CircleInline.ZIndex = 2
 
@@ -42,7 +47,7 @@ RunService.Stepped:Connect(function()
     CircleOutline.Thickness = 4
     CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
     CircleOutline.Transparency = 1
-    CircleOutline.Color = Color3.new()
+    CircleOutline.Color = Color3.new(1,1,1)
     CircleOutline.Visible = false
     CircleOutline.ZIndex = 1
     
@@ -58,7 +63,6 @@ local mt = getrawmetatable(game)
 		local method = getnamecallmethod()
 
 		if tostring(self) == "HitPart" and method == "FireServer" then
-			print("so?")
 			args[1] = GetClosest().Character.Head
 			args[2] = GetClosest().Character.Head.Position
 			return self.FireServer(self, unpack(args))
